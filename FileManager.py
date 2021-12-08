@@ -77,6 +77,36 @@ def split_data(URM_all_dataframe):
     return URM_all.tocsr(), URM_train, URM_validation
 
 
+def load_icm():
+    # Fetch the datset
+    print("> Importing file...")
+    data_file_path = "datasets/"
+    data_train_name = data_file_path + "data_ICM_genre.csv"
+
+    # If directory does not exist, generate error
+    if not os.path.exists(data_train_name):
+        print("> File not found")
+
+    ICM_all_dataframe = pd.read_csv(
+        filepath_or_buffer=data_train_name,
+        names=["item_id", "attribute", "weight"],
+        sep=",",
+        header=0,
+        dtype={0: int, 1: int, 2: float},
+    )
+    print("> Importing file... Completed!")
+    ICM_all = sp.coo_matrix(
+        (
+            ICM_all_dataframe["weight"].values,
+            (
+                ICM_all_dataframe["item_id"].values,
+                ICM_all_dataframe["attribute"].values,
+            ),
+        )
+    )
+    return ICM_all
+
+
 def prepare_submission(
     ratings: pd.DataFrame, users_to_recommend: np.array, recommender: object,
 ):
