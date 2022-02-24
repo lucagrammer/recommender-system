@@ -1,1 +1,0 @@
-On recommender <class 'Recommenders.KNN.UserKNNCFRecommender.UserKNNCFRecommender'> Exception "['URM_bias'] not in index"
